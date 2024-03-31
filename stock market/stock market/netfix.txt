@@ -1,0 +1,42 @@
+import pickle
+import streamlit as st
+from streamlit_option_menu import option_menu
+import pandas as pd
+
+# loading the saved models
+Companystockprice_model = pickle.load(open('C:/Users/admin/Downloads/stock market/data.sav', 'rb'))
+
+# sidebar for navigation
+with st.sidebar:
+    selected = option_menu('Company stock price prediction using ml',
+                          ['Home'
+                           ],
+                          default_index=0)
+
+# Company stock price prediction Page
+if st.button("Home"):
+    # page title
+    st.title('Company stock price prediction using ml')
+    st.image("download1.jpg")
+
+    # getting the input data from the user
+    col1, col2, col3= st.columns(3)
+
+ 
+    with col1:
+        Close = st.text_input('Close')
+  
+    with col1:
+        Name = st.text_input('Name')
+    # code for Prediction
+    companystock_price = ''
+
+    # creating a button for Prediction
+    if st.button('Company stock price Result'):
+        # Use the timestamp as a numeric feature for model prediction
+        Companystockprice_prediction = Companystockprice_model.predict([[float(Close),Name]])
+        st.success('The output is {}'.format(Companystockprice_prediction))
+
+if st.button("About"):
+    st.text("Lets LEarn")
+    st.text("Built with Streamlit")
